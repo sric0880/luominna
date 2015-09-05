@@ -4,16 +4,19 @@
 }
 .rating-input {
   position: absolute;
-  left: 0;
-  top: -50px;
+  left: -100px;
+  top: -200px;
 }
-label.rating-star {        
+label.rating-star {
   display: block;
   float: right;
   width: 16px;
   height: 16px;
   padding: 0 0 0 0;
   background: url('../images/star.png') 0 -16px;
+}
+.inline-group .aligned label.rating-star {
+    width: 16px;
 }
 .rating-star:hover,
 .rating-star:hover ~ .rating-star,

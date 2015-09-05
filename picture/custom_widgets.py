@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from itertools import chain
 
 from django import forms
-from django.forms.widgets import ChoiceFieldRenderer, RadioChoiceInput 
+from django.forms.widgets import ChoiceFieldRenderer, RadioChoiceInput, TextInput
 from django.forms.utils import flatatt
 from django.utils.encoding import force_unicode, force_text
 from django.utils.safestring import mark_safe
@@ -58,7 +58,6 @@ class TagSelect(forms.SelectMultiple):
 
 	def render_options(self, choices, selected_choices):
 		output = []
-		print(selected_choices)
 		for option_value, option_label in chain(self.choices, choices):
 			if option_value in selected_choices:
 				value = format_html(' value={}', option_value)
@@ -84,3 +83,57 @@ class TagSelect(forms.SelectMultiple):
 			'js/jquery-ui.min.js', 
 			'js/tag-it.min.js', 
 			'js/mytag-it.js')
+
+# Image Selector
+class CustomImageInput(TextInput):
+	html = '''
+	<dev id="fileupload">
+    <div class="fileupload-buttonbar">
+        <div class="fileupload-buttons">
+            <span class="fileinput-button">
+                <span>更换图片...</span>
+                <input type="file" name="file">
+            </span>
+            <!-- <button class="start">开始上传</button> -->
+            <!-- <button class="cancel">取消上传</button> -->
+            <span class="fileupload-process"></span>
+        </div>
+       <!-- <div class="fileupload-progress fade" style="display:none">
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-extended">&nbsp;</div>
+        </div> -->
+    </div>
+    <table role="presentation"><tbody class="files"></tbody></table>
+  </dev>
+  '''
+
+	class Media:
+		css = {
+		'all' : (
+			'css/jquery-ui.min.css',
+			'css/jquery.fileupload.css', 
+			'css/jquery.fileupload-ui.css')
+		}
+		js = (
+			'js/jquery-1.11.3.min.js', 
+			'js/jquery-ui.min.js',
+			'js/load-image.all.min.js',
+      'js/jquery.fileupload.js', 
+			'js/jquery.fileupload-process.js',
+			'js/jquery.fileupload-image.js',
+			'js/jquery.fileupload-validate.js',
+      'js/myfileupload.js',
+			'js/jquery.fileupload-ui.js',
+			'js/jquery.fileupload-jquery-ui.js',
+      'js/spark-md5.min.js',
+			)
+
+	def render(self, name, value, attrs=None):
+		if value is None:
+			value = ''
+		final_attrs = self.build_attrs(attrs, type='hidden', name=name)
+		final_attrs['value'] = force_text(value)
+		if final_attrs['value'] is '':
+			return format_html('<input{} />\n{}\n', flatatt(final_attrs), format_html(self.html))
+		else:
+			return format_html('<input{} />\n{}\n<br><img id="id_img" src="{}"/>', flatatt(final_attrs), format_html(self.html), final_attrs['value']+"!preview")

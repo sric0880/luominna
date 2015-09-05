@@ -10,10 +10,10 @@ class Tag(models.Model):
 		return self.name
 
 class Album(models.Model):
-	name = models.CharField(max_length=100)
-	artist = models.CharField(max_length=100)
-	release_date = models.DateField()
-	like = models.IntegerField()
+	name = models.CharField(max_length=100, unique=True, verbose_name='名称')
+	artist = models.CharField(max_length=100, verbose_name='创作者')
+	release_date = models.DateField(verbose_name='创作日期')
+	like = models.IntegerField(default=0, verbose_name='赞')
 
 	def __unicode__(self):
 		return self.name

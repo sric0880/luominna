@@ -19,7 +19,7 @@ from picture import views
 
 urlpatterns = [
     url(r'^$', include('picture.urls')),
-    url(r'^admin/picture/pic/[0-9]+/add_tag/', views.add_tag, name='create_tag'),
-    url(r'^admin/picture/pic/[0-9]+/get_all_tags/', views.get_all_tags, name='get_all_tags'),
+    url(r'^admin/picture/[\w\/]+/add_tag/', views.add_tag, name='create_tag'),
+    url(r'^admin/picture/[\w\/]+/get_all_tags/', views.get_all_tags, name='get_all_tags'),
     url(r'^admin/', include(admin.site.urls)),
 ]
