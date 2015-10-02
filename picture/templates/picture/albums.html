@@ -1,0 +1,12 @@
+{% extends "picture/base.html" %}
+{% load staticfiles %}
+{% block content %}
+<!-- 相簿 -->
+<div class="container">
+	<div class="row">
+	{% for album,pics in albums %}
+		{% include "picture/album.html" %}
+	{% endfor %}
+	</div>
+</div>
+{% endblock %}

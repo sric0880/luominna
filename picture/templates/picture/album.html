@@ -1,0 +1,21 @@
+{% if pics and pics|length != 0 %}
+	<div class="album-entry col-xs-6 col-sm-4 col-md-3">
+		<div class="thumbnail">
+			{% for pic in pics %}
+				{% if forloop.counter0 < 4 %}
+				<div class="clip" style='background-image:url({{ pic.url }}!small);'>
+				</div>
+				{% endif %}
+			{% endfor %}
+			<div class="clearfix"></div>
+			<div class="caption">
+        <h4>{{ album.name }}</h4>
+        <p class="small">{{album.release_date.month}}/{{album.release_date.day}}/{{album.release_date.year}}</p>
+        <div class="list-inline post-data">
+        	<a href="#" title="赞"><i class="icon-heart-empty"></i>{{ album.like }}</a>
+        	<a href="#" title="赞"><i class="icon-share"></i></a>
+        </div>
+    	</div>
+		</div>
+	</div>
+{% endif %}

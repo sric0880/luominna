@@ -1,0 +1,124 @@
+body {
+	padding-top: 70px;
+}
+.navbar-brand {
+	padding: 6px 15px;
+}
+.thumbnail {
+	padding: 0px;
+	border-radius: 0px;
+	cursor: pointer;
+	margin-bottom: 4px;
+}
+.selection-bar {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background-color: rgb(0, 0, 0);
+	opacity: 0;
+	transition: opacity 0.75s;
+	-moz-transition:opacity 0.75s; /* Firefox 4 */
+	-webkit-transition:opacity 0.75s; /* Safari and Chrome */
+	-o-transition:opacity 0.75s; /* Opera */
+	z-index: 2;
+	margin-left: 4px;
+	margin-right: 4px;
+	margin-bottom: 4px;
+	padding: 9px;
+}
+.selection-bar:hover {
+	opacity: 0.67;
+}
+.selection-bar p {
+	color: #EEE;
+}
+.selection-bar .center-block-title {
+	left: 0px;
+	right: 0px;
+	position: absolute;
+	bottom: 50%;
+	color: #EEE;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+.selection-bar .center-block-title small {
+	color: #AAA;
+}
+.selection-bar .center-block-description {
+	left: 0px;
+	right: 0px;
+	position: absolute;
+	top: 50%;
+	clear: both;
+	color: #AAA;
+	font-size: .7em;
+	margin: 1px 10px 0px 10px;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+.clip{
+  display: table-cell;
+  float: left;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #fff;
+  background-size: cover;
+}
+.clip-height{
+	max-width: 100%;
+	height: auto;
+}
+.clip-width{
+	max-height: 100%;
+	width: auto;
+}
+.post-data {
+	bottom: 15px;
+	margin: 0px 3px;
+	position: absolute;
+	right: 15px;
+}
+.post-data a,
+.post-data i,
+.caption p {
+	color: #CCC;
+}
+.post-data a:hover,
+.post-data i:hover {
+	color: #FFF;
+}
+.post-data a {
+	margin-right: 6px;
+	text-decoration: none;
+}
+.post-data i {
+	margin-right: 4px;
+}
+#infscr-loading {
+	text-align: center;
+	z-index: 100;
+	width: 200px;
+	padding: 0 0 30px;
+	color: #999;
+	width: 100%;
+}
+.my-icon-star {
+	display: inline;
+  float: left;
+  width: 16px;
+  height: 16px;
+  padding: 0 0 0 0;
+  background: url('../images/star.png') 0 -16px;
+}
+.shadow {
+  box-shadow: 1px 4px 4px grey;
+}
+.icon-star {
+	color: #FFA500;
+}

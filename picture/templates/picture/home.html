@@ -1,0 +1,16 @@
+{% extends "picture/base.html" %}
+{% load staticfiles %}
+{% block content %}
+<!-- 所有图片 -->
+<div class="container">
+	<div class="row">
+	{% for pic in pictures %}
+		{% if pic %}
+			{% include "picture/pic.html" %}
+		{% endif %}
+	{% endfor %}
+	</div>
+	<!-- 瀑布流无限滚动加载的等待提示区 -->
+	<div id="infscr-loading" action="{{ more_pic_url }}"><img alt="Loading..." src="{% static 'img/loading_waterfall.gif' %}"><span> </span></div>
+</div>
+{% endblock %}

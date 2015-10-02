@@ -18,7 +18,13 @@ from django.contrib import admin
 from picture import views
 
 urlpatterns = [
-    url(r'^$', include('picture.urls')),
+    url(r'^$', views.home),
+    url(r'^pic_more/(?P<page>[0-9]+)$', views.pic_more, name="pic_more"),
+    url(r'^albums/$', views.albums, name='albums'),
+    url(r'^albums/album_more/(?P<page>[0-9]+)$', views.album_more, name='album_more'),
+    url(r'^stars/$', views.stars, name='stars'),
+    url(r'^stars/pic_more/(?P<page>[0-9]+)$', views.pic_greatest_more, name='pic_greatest_more'),
+    url(r'^personal/$', views.personal, name='personal'),
     url(r'^admin/picture/[\w\/]+/add_tag/', views.add_tag, name='create_tag'),
     url(r'^admin/picture/[\w\/]+/get_all_tags/', views.get_all_tags, name='get_all_tags'),
     url(r'^admin/', include(admin.site.urls)),

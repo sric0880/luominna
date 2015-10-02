@@ -3,4 +3,4 @@ db.sqlite3
 */migrations
 .DS_Store
 test.*
-static/
+/static/

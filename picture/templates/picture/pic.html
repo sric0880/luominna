@@ -1,0 +1,30 @@
+{% load picture_extras %}
+<div class="col-xs-6 col-sm-4 col-md-3">
+	<div class="thumbnail">
+		<img src="{{ pic.url }}!preview" alt="{{ pic.name }}"/>
+		<div class="clearfix"></div>
+  	<div class="selection-bar">
+			<p class="small">
+				<!-- 相册 -->
+				<span class="text-left" style="float:left">
+					来自:{{ pic.album }}
+				</span>
+				<!-- 星星 -->
+				<span class="text-right" style="float:right">
+					{% for i in pic.stars|get_range %}
+					<i class="icon-star"></i>
+					{% endfor %}
+				</span>
+			</p>
+			<div class="clearfix"></div>
+			<!-- 名字和创建日期 -->
+			<div class="text-center center-block-title">{{ pic.name }}<small> - {{pic.creation_date.year}}/{{pic.creation_date.month}}/{{pic.creation_date.day}}</small></div>
+			<!-- 评论 -->
+			<p class="text-center center-block-description">{{ pic.comment }}</p>
+			<div class="list-inline post-data">
+				<a href="#" title="赞"><i class="icon-heart-empty"></i>{{ pic.like }}</a>
+				<a href="#" title="赞"><i class="icon-share"></i></a>
+  		</div>
+  	</div>
+	</div>
+</div>
