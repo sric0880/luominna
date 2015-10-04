@@ -2,11 +2,29 @@
 {% load staticfiles %}
 {% block content %}
 <!-- 相簿 -->
-<div class="container">
-	<div class="row">
-	{% for album,pics in albums %}
-		{% include "picture/album.html" %}
-	{% endfor %}
+<div class="wrapper">
+	<div class="container">
+		<div class="row">
+		{% for album,pics in albums %}
+			{% include "picture/album.html" %}
+		{% endfor %}
+		</div>
+	</div>
+	<div class="push"></div>
+</div>
+<div class="full-screen-layer">
+	<button type="button" class="close gallery-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<div class="layer-container">
+		{% for album,pics in albums %}
+		<div id="{{ album.id }}" class="gallery gallery-demo" style="display: none;">
+			{% for pic in pics %}
+			<div class="gallery-cell">
+				<img class="gallery-cell-image" data-flickity-lazyload="{{ pic.url }}"></img>
+				<div class="gallery-cell-info"> </div>
+			</div>
+			{% endfor %}
+		</div>
+		{% endfor %}
 	</div>
 </div>
 {% endblock %}

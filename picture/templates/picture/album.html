@@ -1,6 +1,6 @@
 {% if pics and pics|length != 0 %}
 	<div class="album-entry col-xs-6 col-sm-4 col-md-3">
-		<div class="thumbnail">
+		<div id="{{ album.id }}" class="thumbnail">
 			{% for pic in pics %}
 				{% if forloop.counter0 < 4 %}
 				<div class="clip" style='background-image:url({{ pic.url }}!small);'>

@@ -26,4 +26,4 @@ How to config uwsgi as a service, see [uWSGI won't reload, restart or let me run
 * [masonry](https://github.com/desandro/masonry)
 * [imagesloaded](http://imagesloaded.desandro.com/)
 * [fortawesome](https://fortawesome.github.io/Font-Awesome/)
-* [flickity](http://flickity.metafizzy.co/)
+* [flickity](https://github.com/metafizzy/flickity)
