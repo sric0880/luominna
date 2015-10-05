@@ -16,4 +16,14 @@
 	</div>
 	<div class="push"></div>
 </div>
+<div class="full-screen-layer">
+	<div class="gallery-close" aria-label="Close">
+		<i class="icon-remove icon-2x icon-close"></i>
+	</div>
+	<div class="layer-container">
+		{% for pic in pictures %}
+			{% include "picture/pic_gallery_demo.html" %}
+		{% endfor %}
+	</div>
+</div>
 {% endblock %}

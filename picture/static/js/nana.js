@@ -5,15 +5,31 @@ function resize_clip(){
   	$(this).height(Math.round(w) / r);
   });
 }
-function resize_layer_container() {
-	$(".layer-container-left").width($(window).width() - $(".layer-container-right").width()-75);
-}
-function resize_layer_container_gallery() {
+function resize_layer_container_gallery(isWindowResize) {
 	var $layer = $(".full-screen-layer");
 	var $gallery = $layer.find(".gallery-demo");
-	var h = $(window).height() - 140;
+	var h = $(window).height() - 40;
 	$gallery.height(h);
-	$gallery.find(".gallery-cell").height(h);
+	var $gallery_cells = $gallery.find(".gallery-cell");
+	$gallery_cells.height(h - 120); //100 used for info cell
+	$gallery_cells.width($(window).width());
+	if (isWindowResize)
+	{
+		var $visibleGallery = $layer.find(".gallery-demo:visible");
+		if ($visibleGallery.length != 0){
+			resize_gallery_cell_img($visibleGallery.find(".gallery-cell"));
+		}
+	}
+}
+function resize_gallery_cell_img(visibleGalleryCells) {
+	$(visibleGalleryCells).each(function(){
+		$img = $(this).find("img");
+		var h = $img.height();
+		console.log(" : " + h);
+		var margin = ($(window).height() - h - 130 - 40)/2;
+		console.log(margin + " : " + $img.length);
+		$img.css({"margin-top":margin+"px", "margin-bottom":margin+"px"});
+	});
 }
 function relayout(){
 	$images = $(".thumbnail img");
@@ -30,7 +46,6 @@ function relayout(){
 			}
 		});
 	}
-	console.log($images);
 	$images.imagesLoaded( function() {
 		$(".row").masonry({
 			percentPosition: true
@@ -75,10 +90,13 @@ function page_more(){
 					$("#infscr-loading").hide();
 					console.log("nothing any more");
 				}else{
-					var $appendItems = $(feedback);
-					$appendItems.click(itemClicked);
+					var ret = feedback.split("&");
+					var $appendItems = $(ret[0]);
+					$appendItems.find("div.thumbnail").click(itemClicked);
 					$('.row').append($appendItems);
 					appendLayout($appendItems);
+					$(".layer-container").append($(ret[1]));
+					resize_layer_container_gallery(false);
 				}
 			}
 		});
@@ -89,7 +107,7 @@ $("#go-top").hide();
 //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
 $(function () {
 	$(window).scroll(function(){
-		if ($(window).scrollTop()>400){
+		if ($(window).scrollTop()>300){
 			$("#go-top").fadeIn(500);
 		} else {
 			$("#go-top").fadeOut(500);
@@ -101,82 +119,72 @@ $(function () {
 		return false;
 	});
 });
+function hideScrollbar(){
+	$("body").css({overflow:"hidden"});
+	$(".wrapper").hide();
+	$("nav").hide();
+	$("#footer").hide();
+}
+function showScrollbar(){
+	$("body").css({overflow:"auto"});
+	$(".wrapper").show();
+	$("nav").show();
+	$("#footer").show();
+}
 function itemClicked() {
 	var $layer = $(".full-screen-layer");
-	$layer.css("top", $(document).scrollTop() + "px");
 	$layer.show();
-	$("body").css({overflow:"hidden"});
-	$layer.find("button.close").click(function(){
+	var scrollvalue = $(document).scrollTop();
+	hideScrollbar();
+	$layer.find(".gallery-close").click(function(){
 		$layer.hide();
 		$layer.find(".gallery-demo").hide();
-		$("body").css({overflow:"auto"});
-		$layer.css("top", "0px");
+		showScrollbar();
+		resize_clip();
+		$('body,html').animate({scrollTop:scrollvalue},0);
 	});
-	resize_layer_container();
+	var $gallery = $layer.find("#" + $(this).attr("id"));
+	console.log("#" + $(this).attr("id"));
+	$gallery.fadeIn();
+	var $g;
 	if ($(this).parent().hasClass("album-entry")) {
-		var $gallery = $layer.find("#" + $(this).attr("id"));
-		$gallery.fadeIn();
-		var $gallery_cells = $gallery.find(".gallery-cell");
-		$gallery_cells.mouseover(function(){
-			$(this).find(".gallery-cell-info").fadeIn("fast");
-		});
-		$gallery_cells.mouseout(function(){
-			$(this).find(".gallery-cell-info").fadeOut("fast");
-		});
-		$gallery_cells.on("vmouseover", function(){
-			$(this).find(".gallery-cell-info").fadeIn("fast");
-		});
-		$gallery_cells.on("vmouseout", function(){
-			$(this).find(".gallery-cell-info").fadeOut("fast");
-		});
-		$gallery.flickity({
+		$g = $gallery.flickity({
 			imagesLoaded: true,
-
 		  cellAlign: 'center',
-		  // alignment of cells, 'center', 'left', or 'right'
-		  // or a decimal 0-1, 0 is beginning (left) of container, 1 is end (right)
-
 		  draggable: true,
-		  // enables dragging & flicking
-
 		  freeScroll: false,
-		  // enables content to be freely scrolled and flicked
-		  // without aligning cells
-
 		  lazyLoad: 2,
-		  // enable lazy-loading images
-		  // set img data-flickity-lazyload="src.jpg"
-		  // set to number to load images adjacent cells
-
 		  percentPosition: false,
-		  // sets positioning in percent values, rather than pixels
-		  // Enable if items have percent widths
-		  // Disable if items have pixel widths, like images
-
 		  prevNextButtons: true,
-		  // creates and enables buttons to click to previous & next cells
-
 		  pageDots: true,
-		  // create and enable page dots
-
 		  resize: true,
-		  // listens to window resize events to adjust size & positions
-
 		  setGallerySize: false,
-		  // sets the height of gallery
-		  // disable if gallery already has height set with CSS
-
 		  wrapAround: false
-		  // at end of cells, wraps-around to first for infinite scrolling
 		});
 	} else {
-		console.log("i am picture");
+		$g = $gallery.flickity({
+			imagesLoaded: true,
+		  cellAlign: 'center',
+		  draggable: false,
+		  freeScroll: false,
+		  lazyLoad: true,
+		  percentPosition: false,
+		  prevNextButtons: false,
+		  pageDots: false,
+		  resize: true,
+		  setGallerySize: false,
+		  wrapAround: false
+		});
 	}
+	$g.on( 'lazyLoad', function( event, cellElement ) {
+		var img = event.originalEvent.target;
+		console.log( event.originalEvent.type, img.src );
+		resize_gallery_cell_img(cellElement);
+	});
 }
 $(window).resize(function() {
 	resize_clip();
-	resize_layer_container();
-	resize_layer_container_gallery();
+	resize_layer_container_gallery(true);
 });
 $(document).ready( function() {
 	$(".album-entry").each(function(){
@@ -193,7 +201,6 @@ $(document).ready( function() {
 				});
 			}
 		});
-		console.log($images);
 		var imgLoad = imagesLoaded($images);
 		imgLoad.on( 'always', function() {
 			var ratios = [];
@@ -299,7 +306,7 @@ $(document).ready( function() {
 	if ($("#infscr-loading").length != 0) {
 		page_more();
 	}
-	resize_layer_container_gallery();
+	resize_layer_container_gallery(false);
 	$(".full-screen-layer").hide();
 	$("div.thumbnail").click(itemClicked);
 });

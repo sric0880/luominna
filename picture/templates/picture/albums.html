@@ -1,5 +1,6 @@
 {% extends "picture/base.html" %}
 {% load staticfiles %}
+{% load picture_extras %}
 {% block content %}
 <!-- 相簿 -->
 <div class="wrapper">
@@ -13,14 +14,32 @@
 	<div class="push"></div>
 </div>
 <div class="full-screen-layer">
-	<button type="button" class="close gallery-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<div class="gallery-close" aria-label="Close">
+		<i class="icon-remove icon-2x icon-close"></i>
+	</div>
 	<div class="layer-container">
 		{% for album,pics in albums %}
-		<div id="{{ album.id }}" class="gallery gallery-demo" style="display: none;">
+		<div id="{{ album.id }}" class="gallery gallery-demo">
 			{% for pic in pics %}
 			<div class="gallery-cell">
-				<img class="gallery-cell-image" data-flickity-lazyload="{{ pic.url }}"></img>
-				<div class="gallery-cell-info"> </div>
+				<img class="gallery-cell__lazy-image center-block" data-flickity-lazyload="{{ pic.url }}"></img>
+				<div class="gallery-cell-info">
+					<!-- 名字和创建日期 -->
+					<div class="pull-left">
+						<h4>{{ pic.name }}<small> - {{pic.creation_date.year}}/{{pic.creation_date.month}}/{{pic.creation_date.day}} - 来自: {{ pic.album }}</small>
+						</h4>
+						<!-- 星星 -->
+						{% for i in pic.stars|get_range %}
+						<i class="icon-star"></i>
+						{% endfor %}
+						<p>{{ pic.comment }}</p>
+					</div>
+					<!-- 评论 -->
+					<div class="list-inline post-data pull-right">
+						<a href="#" title="赞"><i class="icon-heart-empty"></i>{{ pic.like }}</a>
+						<a href="#" title="分享"><i class="icon-share"></i></a>
+		  		</div>
+				</div>
 			</div>
 			{% endfor %}
 		</div>

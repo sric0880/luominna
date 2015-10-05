@@ -1,6 +1,6 @@
 {% load picture_extras %}
 <div class="col-xs-6 col-sm-4 col-md-3">
-	<div class="thumbnail">
+	<div id="{{ pic.id }}" class="thumbnail">
 		<img src="{{ pic.url }}!preview" alt="{{ pic.name }}"/>
 		<div class="clearfix"></div>
   	<div class="selection-bar">

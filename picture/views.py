@@ -55,11 +55,14 @@ def render_pics_template(pics):
   if pics == None:
     return HttpResponse("")
   template = loader.get_template('picture/pic.html')
+  template_gallery = loader.get_template('picture/pic_gallery_demo.html')
   html = []
+  html_gallery = []
   for pic in pics:
-    txt = template.render({'pic': pic})
-    html.append(txt)
+    html.append(template.render({'pic': pic}))
+    html_gallery.append(template_gallery.render({'pic': pic}))
   ret = '\n'.join(html)
+  ret += ( '&' + '\n'.join(html_gallery) )
   return HttpResponse(ret, content_type='text/html; charset=utf-8');
 
 def pic_more(request, page):
