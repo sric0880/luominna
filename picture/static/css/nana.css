@@ -3,6 +3,7 @@ html {
 }
 body {
 	padding-top: 60px;
+	height: 100%;
 }
 .navbar-brand {
 	padding: 6px 15px;
